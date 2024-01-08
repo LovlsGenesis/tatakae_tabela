@@ -11,11 +11,7 @@ class Config < ApplicationRecord
   end
 
   def season_days
-    date = DateTime.new(2024,1, 25)
-    now = DateTime.now
-    value = (date - season_start)
-    # value = (now -  season_start)
-
+    value = (DateTime.now - season_start)
     return value.to_f if value.to_i.positive?
 
     0
