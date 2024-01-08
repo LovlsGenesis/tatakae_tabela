@@ -1,0 +1,36 @@
+<div class="bg-slate-900 w-screen rounded-xl p-5 mt-5">
+  <div>
+    <%= form_for( @member , remote: true) do |f| %>
+      <%= f.label :name, "Name", class: "block text-sm font-medium leading-6 text-slate-400" %>
+      <%= f.text_field :name, class: "block w-1/4 rounded-md border-0 py-1.5 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+
+      <%= f.label :joined, "Joined", class: "block text-sm font-medium leading-6 text-slate-400 mt-5" %>
+      <%= f.date_field :joined , class: "block w-1/4 rounded-md border-0 py-1.5 pl-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"%>
+
+      <%= f.fields_for :winrate, @winrate do |winrate_f| %>
+       <div class="grid grid-cols-3 gap-4">
+          <div>
+            <%= winrate_f.label :wins, "Wins", class: "block text-sm font-medium leading-6 text-slate-400 mt-5" %>
+            <%= winrate_f.number_field :wins, value: @winrate.wins.to_i,class: "block w-3/4 rounded-md border-0 py-1.5 pl-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+
+          <div>
+            <%= winrate_f.label :draws, "Draws", class: "block text-sm font-medium leading-6 text-slate-400 mt-5" %>
+            <%= winrate_f.number_field :draws, value: @winrate.draws.to_i , class: "block w-3/4 rounded-md border-0 py-1.5 pl-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+
+          <div>
+            <%= winrate_f.label :loses, "Loses", class: "block text-sm font-medium leading-6 text-slate-400 mt-5" %>
+            <%= winrate_f.number_field :loses, value: @winrate.loses.to_i, class: "block w-3/4 rounded-md border-0 py-1.5 pl-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= f.button :submit, class:  'bg-transparent hover:bg-slate-500 text-slate-400 font-semibold hover:text-white py-2 px-4 mt-5 border border-slate-500 hover:border-transparent rounded' %>
+      <%= link_to "Back", :back, class: 'bg-transparent hover:bg-red-500 text-red-400 font-semibold hover:text-white py-2 px-4 mt-5 border border-red-500 hover:border-transparent rounded' %>
+    <% end %>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
+

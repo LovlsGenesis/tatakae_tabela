@@ -1,0 +1,74 @@
+<div class="mt-28">
+  <div class="mb-5 flex justify-between">
+    <div>
+      <%= link_to "Create new member", new_member_path, class: 'bg-transparent hover:bg-slate-500 text-slate-700 font-semibold hover:text-white py-2 px-4 border border-slate-500 hover:border-transparent rounded' %>
+      <%= link_to "Ranking", clean_ranking_members_path, class: 'bg-transparent hover:bg-slate-500 text-slate-700 font-semibold hover:text-white py-2 px-4 border border-slate-500 hover:border-transparent rounded' %>
+    </div>
+      <%= link_to "New Season", @config.nil? ? new_config_path : edit_config_path(@config), class: 'bg-transparent hover:bg-slate-500 text-slate-700 font-semibold hover:text-white py-2 px-4 border border-slate-500 hover:border-transparent rounded' %>
+  </div>
+
+  <div class="rounded-xl bg-[#131B2E]">
+    <table class="border-collapse table-auto text-sm">
+      <thead class="">
+        <tr>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Members</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Joined</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Wins</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Loses</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Draws</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Total Atk</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Total w/o Atking</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Total Atk / Time in Guild</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">% No Atk</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Wins</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Draws</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Loses</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Wins / Draws</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Loses / Draws</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Season Days</th>
+          <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Options</th>
+        </tr>
+      </thead>
+      <tbody class="bg-slate-800">
+        <% @members.each do |member| %>
+          <tr>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.name %></td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.joined.strftime("%d/%m/%Y") %></td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.winrate.wins.to_i%> </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.winrate.loses.to_i%> </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.winrate.draws.to_i%> </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.winrate.total.to_i%> </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.total_without_atk.to_i%> </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.total_atk_per_stay_in_guild%> </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.percent_no_attack.round(2)%>% </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.win_percent.round(2)%>% </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.draw_percent.round(2)%>% </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.lose_percent.round(2)%>% </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.win_draws.round(2)%>% </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= member.lose_draws.round(2)%>% </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center"><%= @config.present? ? @config.season_days.to_i : 0%> </td>
+              <td class="border-b border-slate-700 p-5 text-slate-400 text-center" data-controller="dropdown">
+                <div class="relative inline-block text-left">
+                  <div>
+                    <button type="button" data-dropdown-target="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                      Options
+                      <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" data-dropdown-target="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                      <%= link_to "Visualize", member_path(member), class: "text-gray-700 block px-4 py-2 text-sm", role: "menuitem", tabindex: "-1", id: "menu-item-0"%>
+                      <%= link_to "Edit", edit_member_path(member), class: "text-gray-700 block px-4 py-2 text-sm", role: "menuitem", tabindex: "-1", id: "menu-item-1"%>
+                      <%= button_to "Remove", member_path(member), method: :delete, remote: true, class:"text-gray-700 block px-4 py-2 text-sm", role:"menuitem", tabindex:"-1", id:"menu-item-2", data: { confirm: 'Are you certain you want to delete this?' } %>
+                    </div>
+                  </div>
+                </div>
+              </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="mt-10 w-full">
+  <%= link_to "Back", :back, class: "bg-transparent hover:bg-slate-500 text-slate-400 font-semibold hover:text-white py-2 px-4 mt-5 border border-slate-500 hover:border-transparent rounded" %>
+  <div class="flex justify-center">
+    <div class="m-auto rounded-xl bg-[#131B2E]">
+      <table class="border-collapse table-auto w-full text-sm">
+        <thead>
+          <tr>
+            <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Nick</th>
+            <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Rank</th>
+            <th class="border-b border-slate-600 font-medium px-3 py-5 text-slate-200 text-center">Wins/Draws</th>
+          </tr>
+        </thead>
+        <tbody class="bg-slate-800">
+          <% @members.each do |member| %>
+            <tr>
+              <td class="border-b border-slate-700 p-5 text-slate-200 text-center bg-[#131B2E]"><%= member.name %></td>
+              <td class="border-b border-black p-5 text-black text-center win_percent"><%= member.win_percent.round(2) %>%</td>
+              <td class="border border-black p-5 text-black text-center win_draws"><%= member.win_draws.round(2) %>%</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  const winPercent = document.getElementsByClassName('win_percent')
+  const winDraws = document.getElementsByClassName('win_draws')
+
+  function background(target) {
+    const value = parseFloat(target.textContent)
+    if (value >= 75.0) {
+      target.classList.add('bg-green-400')
+    } else if (value >= 60.0) {
+      target.classList.add('bg-orange-400')
+
+    } else {
+      target.classList.add('bg-red-400')
+    }
+  }
+
+  for (let target of winPercent) {
+    background(target)
+  }
+
+  for (let target of winDraws) {
+    background(target)
+  }
+</script>
