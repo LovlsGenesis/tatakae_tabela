@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: tatakae_tabela_production
-  username: tatakae_tabela
-  password: <%= ENV["TATAKAE_TABELA_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
