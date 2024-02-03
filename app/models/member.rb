@@ -27,7 +27,9 @@ class Member < ApplicationRecord
     config = Config.where(id: 1).first
     return 0 if config.nil? || config.atk_since_season_started.zero?
 
-    (config.atk_since_season_started - number_of_atks_since_joined) - number_of_atk_actual_week
+    atk_since_joined = ((joined - config.season_start).to_i / 7) * 9
+
+    (config.atk_since_season_started - (atk_since_joined + number_of_atks_since_joined)) - number_of_atk_actual_week
   end
 
   def number_of_atks_since_joined
