@@ -27,7 +27,7 @@ class Member < ApplicationRecord
     config = Config.where(id: 1).first
     return 0 if config.nil? || config.atk_since_season_started.zero?
 
-    config.atk_since_season_started - number_of_atks_since_joined
+    (config.atk_since_season_started - number_of_atks_since_joined) - number_of_atk_actual_week
   end
 
   def number_of_atks_since_joined
@@ -40,6 +40,13 @@ class Member < ApplicationRecord
     else
       0
     end
+  end
+
+  def number_of_atk_actual_week
+    today = Time.zone.now
+    return 9 unless today.wday >= 6 && today.hour >= 7
+
+    0
   end
 
   def percent_no_attack
@@ -56,6 +63,10 @@ class Member < ApplicationRecord
 
   def self.order_by_win_percent
     all.sort_by(&:win_percent).reverse
+  end
+
+  def self.order_by_win_draws
+    all.sort_by(&:win_draws).reverse
   end
 
   def lose_percent

@@ -2,7 +2,8 @@ class MembersController < ApplicationController
   before_action :set_member, only: %i[show update edit destroy]
 
   def clean_ranking
-    @members = Member.order_by_win_percent
+    @members = Member.order_by_win_draws
+
     @config = Config.first
   end
 
