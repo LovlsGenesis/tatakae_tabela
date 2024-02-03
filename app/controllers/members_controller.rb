@@ -4,6 +4,8 @@ class MembersController < ApplicationController
   def clean_ranking
     @members = Member.order_by_win_draws
 
+    @members = Member.order_by_win_percent if params[:sort] == 'rank'
+
     @config = Config.first
   end
 
