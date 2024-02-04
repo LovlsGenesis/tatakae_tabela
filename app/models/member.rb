@@ -6,6 +6,8 @@ class Member < ApplicationRecord
 
   accepts_nested_attributes_for :winrate
 
+  CONFIG = Config.where(id: 1).first
+
   def self.reset
     all.each do |member|
       member.winrate.update(wins: 0, draws: 0, loses: 0)
@@ -24,12 +26,11 @@ class Member < ApplicationRecord
   end
 
   def total_atk_per_stay_in_guild
-    config = Config.where(id: 1).first
-    return 0 if config.nil? || config.atk_since_season_started.zero?
+    return 0 if CONFIG.nil? || CONFIG.atk_since_season_started.zero?
 
-    atk_since_joined = ((joined - config.season_start).to_i / 7) * 9
+    atk_since_joined = ((joined - CONFIG.season_start).to_i / 7) * 9
 
-    (config.atk_since_season_started - (atk_since_joined + number_of_atks_since_joined)) - number_of_atk_actual_week
+    (CONFIG.atk_since_season_started - (atk_since_joined + number_of_atks_since_joined)) - number_of_atk_actual_week
   end
 
   def number_of_atks_since_joined
@@ -46,7 +47,7 @@ class Member < ApplicationRecord
 
   def number_of_atk_actual_week
     today = Time.zone.now
-    return 9 unless today.wday >= 6 && today.hour >= 7
+    return 9 unless (today.wday >= 6 && today.hour >= 7) || today.wday.zero?
 
     0
   end
